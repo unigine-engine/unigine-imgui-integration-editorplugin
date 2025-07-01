@@ -1,0 +1,1 @@
+# unigine-imgui-integration-editorplugin
