@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<asset version="2.20.0.0">
+	<guid>a3bfd26aec6ac929653a69db74dfb6ad47649e68</guid>
+	<type>material</type>
+	<hash>be142e1d</hash>
+	<runtimes>
+		<runtime id="a3bfd26aec6ac929653a69db74dfb6ad47649e68" name="imgui" link="0" type="5"/>
+	</runtimes>
+</asset>

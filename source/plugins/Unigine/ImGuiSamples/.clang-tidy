@@ -1,0 +1,4 @@
+---
+Checks: 'clang-diagnostic-*,clang-analyzer-*,cppcoreguidelines-narrowing-conversions,cppcoreguidelines-init-variables,cppcoreguidelines-interfaces-global-init,cppcoreguidelines-narrowing-conversions,cppcoreguidelines-pro-type-cstyle-cast,cppcoreguidelines-pro-type-const-cast,cppcoreguidelines-pro-type-member-init,-modernize-*,-google-default-arguments,-cppcoreguidelines-avoid-c-arrays,-hicpp-avoid-c-arrays,-modernize-avoid-c-arrays'
+...
+
