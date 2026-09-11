@@ -1,0 +1,9 @@
+{
+	"0dbaabce52fac70cd8de48405e1742ed3082de1c": "configs/default.user",
+	"6991fc8f8f5187d72358e68502af674a884f62cb": "configs/default.controls",
+	"9b1e1c3c1dd7ab94edfce3dec0f82ea85c9085da": "configs/editor.boot",
+	"a3bfd26aec6ac929653a69db74dfb6ad47649e68": "plugins/Unigine/ImGuiSamples/imgui.basemat",
+	"b8616e5592089f01c8c360ff4f2e6b0b5ec80d02": "plugins/Unigine/ImGuiSamples/Roboto-Light.ttf",
+	"ca1cb955b3a71afd6aa03bdbd2c8bd0697649b71": "configs/default.global",
+	"efcd01b04c29ab9e6596df727e1713b16fa6d9ae": "configs/default.config"
+}

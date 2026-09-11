@@ -16,8 +16,6 @@ set(CMAKE_AUTOMOC TRUE)
 set(CMAKE_AUTOUIC TRUE)
 set(CMAKE_AUTORCC TRUE)
 
-set(UNIGINE_DOUBLE False CACHE BOOL "Double coords")
-
 ##==============================================================================
 ## Variables.
 ##==============================================================================
@@ -29,6 +27,7 @@ set(UNIGINE_DOUBLE False CACHE BOOL "Double coords")
 # DOUBLE_PRECISION - double (TRUE) or single (FALSE) precision for the target.
 # VENDOR_NAME - name of a company or person offering the plugin.
 # target - name of the plugin.
+set(UNIGINE_DOUBLE False CACHE BOOL "Double coords")
 set(vendor_name Unigine)
 set(target ImGuiSamples)
 
@@ -43,6 +42,13 @@ string(APPEND binary_name "_x64")
 ## Environment.
 ##==============================================================================
 set(UNIGINE_SDK_PATH ${PROJECT_SOURCE_DIR}/../../../../)
+# Multi-sample repo fallback: if the per-sample SDK payload was not restored by
+# SDK Browser (Repair), use the shared SDK at the repository root. SDK Browser
+# users (per-sample SDK present) are unaffected.
+if(NOT EXISTS "${UNIGINE_SDK_PATH}include/UnigineEngine.h")
+  get_filename_component(_repo_root "${PROJECT_SOURCE_DIR}/../../../../../../" ABSOLUTE)
+  set(UNIGINE_SDK_PATH "${_repo_root}/")
+endif()
 set(UNIGINE_BIN_DIR ${UNIGINE_SDK_PATH}bin/)
 set(UNIGINE_LIB_DIR ${UNIGINE_SDK_PATH}lib/)
 set(UNIGINE_INCLUDE_DIR ${UNIGINE_SDK_PATH}include/)
@@ -57,36 +63,40 @@ find_package(Editor REQUIRED MODULE QUIET)
 
 # UNIGINE_QTROOT is Unigine related global variable that points to the effective
 # Qt's distributive.
-set(QT5_ROOT "$ENV{QTROOT}")
-if (QT5_ROOT AND EXISTS "${QT5_ROOT}")
-  list(APPEND CMAKE_PREFIX_PATH ${QT5_ROOT})
+if ($ENV{UNIGINE_QTALLROOT})
+	set(QT6_ROOT "$ENV{UNIGINE_QTALLROOT}/v6.5.3")
+else()
+	set(QT6_ROOT "$ENV{UNIGINE_3RDPARTY_DIR}/Qt-All/v6.5.3")
+endif()
+if (QT6_ROOT AND EXISTS "${QT6_ROOT}")
+	list(APPEND CMAKE_PREFIX_PATH ${QT6_ROOT})
+endif ()
+unset(QT6_ROOT)
+
+find_package(Qt6 6.5.3 CONFIG EXACT COMPONENTS Core Gui Widgets)
+
+if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+    get_target_property(MOC_EXECUTABLE Qt6::moc IMPORTED_LOCATION_RELEASE)
+    set_target_properties(Qt6::moc PROPERTIES IMPORTED_LOCATION_DEBUG ${MOC_EXECUTABLE})
+
+    get_target_property(RCC_EXECUTABLE Qt6::rcc IMPORTED_LOCATION_RELEASE)
+    set_target_properties(Qt6::rcc PROPERTIES IMPORTED_LOCATION_DEBUG ${RCC_EXECUTABLE})
+
+    get_target_property(UIC_EXECUTABLE Qt6::uic IMPORTED_LOCATION_RELEASE)
+    set_target_properties(Qt6::uic PROPERTIES IMPORTED_LOCATION_DEBUG ${UIC_EXECUTABLE})
+
+    set_target_properties(Qt6::Core Qt6::Gui Qt6::Widgets 
+        PROPERTIES 
+        MAP_IMPORTED_CONFIG_DEBUG "RELEASE"
+    )
 endif()
 
-# The following construct is required as Editor's Debug build
-# uses Release binaries of QT5 framework
-set(temp_map_imported ${CMAKE_MAP_IMPORTED_CONFIG_DEBUG})
-set(CMAKE_MAP_IMPORTED_CONFIG_DEBUG RELEASE)
-
-# Find additional required packages
-find_package(Qt5 5.12.3 CONFIG EXACT COMPONENTS Core Gui Widgets)
-
-# Apply imported_location for qt executable
-get_target_property(MOC_EXECUTABLE Qt5::moc IMPORTED_LOCATION)
-set_target_properties(Qt5::moc PROPERTIES IMPORTED_LOCATION_RELEASE ${MOC_EXECUTABLE})
-get_target_property(RCC_EXECUTABLE Qt5::rcc IMPORTED_LOCATION)
-set_target_properties(Qt5::rcc PROPERTIES IMPORTED_LOCATION_RELEASE ${RCC_EXECUTABLE})
-get_target_property(UIC_EXECUTABLE Qt5::uic IMPORTED_LOCATION)
-set_target_properties(Qt5::uic PROPERTIES IMPORTED_LOCATION_RELEASE ${UIC_EXECUTABLE})
-
-# Restore the actual value
-set(CMAKE_MAP_IMPORTED_CONFIG_DEBUG ${temp_map_imported})
-unset(temp_map_imported)
-
-if (NOT Qt5_FOUND)
-  message(FATAL_ERROR "The required Qt version is not found on your computer, "
-  "please follow this link to see the instructions on resolving this issue. "
-  "https://developer.unigine.com/en/docs/latest/editor2/extensions/environment")
+if (NOT Qt6_FOUND)
+	message(FATAL_ERROR "The required Qt version is not found on your computer, "
+	"please follow this link to see the instructions on resolving this issue. "
+	"https://developer.unigine.com/en/docs/latest/editor2/extensions/environment")
 endif()
+
 ##==============================================================================
 ## Target.
 ##==============================================================================
@@ -134,9 +144,9 @@ target_link_libraries(${target}
   PRIVATE
   Unigine::Engine
   Unigine::Editor
-  Qt5::Core
-  Qt5::Gui
-  Qt5::Widgets
+  Qt6::Core
+  Qt6::Gui
+  Qt6::Widgets
   )
 
 ##==============================================================================

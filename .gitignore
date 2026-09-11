@@ -1,0 +1,28 @@
+# generic
+.thumbnails
+bin/*
+data/.thumbnails
+data/microprofile_dump_html
+junk
+obj
+CMakeCache.txt
+*.cache
+*.modified
+*.tlog
+
+# cmake
+build-*
+CMakeFiles
+CMakeScripts
+cmake_install.cmake
+CMakeUserPresets.json
+compile_commands.json
+
+# restored by SDK Browser (Repair)
+include/
+lib/
+utils/
+data/.runtimes
+data/configs
+data/*.ung
+data/shader_*.cache

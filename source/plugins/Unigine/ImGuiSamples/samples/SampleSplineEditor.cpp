@@ -18,12 +18,12 @@ using UnigineEditor::Undo;
 
 namespace
 {
-constexpr char *CONTEXT_SPLINE_EDITOR = "spline_editor";
-constexpr char *SHORTCUT_SELECT = "spline_select";
-constexpr char *SHORTCUT_ADD_OR_EXTEND = "spline_add_or_select";
-constexpr char *SHORTCUT_DELETE = "spline_delete";
-constexpr char *SHORTCUT_FOCUS = "spline_focus";
-constexpr char *DESCRIPTION_TMPL_
+constexpr const char *CONTEXT_SPLINE_EDITOR = "spline_editor";
+constexpr const char *SHORTCUT_SELECT = "spline_select";
+constexpr const char *SHORTCUT_ADD_OR_EXTEND = "spline_add_or_select";
+constexpr const char *SHORTCUT_DELETE = "spline_delete";
+constexpr const char *SHORTCUT_FOCUS = "spline_focus";
+constexpr const char *DESCRIPTION_TMPL_
 	= "This sample shows how to use the Editor API if you are creating a complex "
 		"plugin that uses Editor's Undo/Redo, Hotkeys, custom visualization...\n"
 		"More code, but at the same time more flexibility.\n"

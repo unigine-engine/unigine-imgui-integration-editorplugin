@@ -2,7 +2,7 @@
 
 The ***ImGuiSamples Plugin*** demonstrates how to integrate the [Dear ImGui](https://github.com/ocornut/imgui) library with **UnigineEditor**, and how to use the [Editor's API](https://developer.unigine.com/en/docs/latest/api/editor/index.html) to build advanced custom tools (create new buttons, menus, widgets and more) for various development tasks. The sample is also available on the [Add-On Store](https://store.unigine.com/add-on/1efb3c7d-5082-6e82-8692-7342af84d483/description) as **ImGuiSamples Plugin**.
 
-![ImGuiSamples Plugin](https://developer.unigine.com/en/docs/latest/editor2/imgui_samples_plugin/anim_sm.gif)
+![ImGuiSamples Plugin](https://documentation-api.unigine.com/en/docs/latest/editor2/imgui_samples_plugin/anim_sm.gif)
 
 The plugin adds a custom window to the UnigineEditor with three tabs, each showcasing a different sample:
 
@@ -57,29 +57,27 @@ To get started with the **ImGuiSamples Plugin**:
 
 3. **Add the sample project to SDK Browser**:
    - Go to the *My Projects* tab.
-   - Click *Add Existing*, select the `.project` file from the cloned folder (matching your OS - `*-win-*`/`*-lin-*`, edition, precision), and click *Import Project*.
+   - Click *Add Existing*, select the `.project` file from the cloned folder (matching your OS - `*_win_*`/`*_lin_*`, edition, precision), and click *Import Project*.
 
-     ![Add Project](https://developer.unigine.com/en/docs/latest/sdk/api_samples/third_party/photon/add_project.png)
-
-> [!NOTE]
-> If you're using **UNIGINE SDK *Sim***, select the ***Engineering*** `*-eng-sim-*.project` file when importing the sample. After import, you can upgrade the project to the **Sim** version directly in SDK Browser - just click *Upgrade*, choose the SDK **Sim** version, and adjust any additional settings you want to use in the configuration window that opens.
+     ![Add Project](https://documentation-api.unigine.com/en/docs/latest/sdk/api_samples/third_party/photon/add_project.png)
 
 4. **Repair the project**:
    - After importing, you'll see a **Repair** warning - this is expected, as only essential files are stored in the Git repository. SDK Browser will restore the rest.
 
-![Repair Project](https://developer.unigine.com/en/docs/latest/sdk/api_samples/third_party/repair_project.png)
+![Repair Project](https://documentation-api.unigine.com/en/docs/latest/sdk/api_samples/third_party/repair_project.png)
 
    - Click *Repair* and then *Configure Project*.
 
-4. **Install required dependencies**:
-   - The sample uses the **Qt 5.12.3** framework. Make sure you have **Qt 5.12.3** installed and that the corresponding **QT environment variable** is correctly set. For this sample, Qt will be located using the `QTROOT` environment variable.
-You can set it, for example, as follows: click *Start*, type *Environment Variables*, and open *Edit the system environment variables*. In the *System Environment Variables* dialog, click *New* (or *Edit*, if it already exists) and set:
-       - **Variable name**: `QTROOT`
-       - **Value**: full Qt path (e.g., `C:\Qt\5.12.3\msvc2017_64`)
-         ![QT Setup](https://developer.unigine.com/en/docs/latest/editor2/imgui_samples_plugin/qt_setup.png)
-       - Restart your IDE or system to apply changes.
+5. **Install required dependencies**:
+   - The plugin uses the **Qt 6.5.3** framework (UnigineEditor extensions require Qt). Install **Qt 6.5.3**
+     and make it discoverable by CMake. `CMakeLists.txt` searches for it in this order:
+       - `%UNIGINE_QTALLROOT%\v6.5.3` (environment variable `UNIGINE_QTALLROOT`), then
+       - `%UNIGINE_3RDPARTY_DIR%\Qt-All\v6.5.3` (environment variable `UNIGINE_3RDPARTY_DIR`), then
+       - the CMake package search path (a system Qt 6.5.3, or pass `-DCMAKE_PREFIX_PATH=<path-to-Qt-6.5.3>`).
+   - Set one of those environment variables to your Qt location (so that `<value>\v6.5.3` exists), or pass
+     `-DCMAKE_PREFIX_PATH` when configuring. Restart your IDE or system after changing environment variables.
 
-5. **Open the project in your IDE**:
+6. **Open the project in your IDE**:
    - Launch the recommended Visual Studio 2022 (other C++ IDE with CMake support can be used as well).
    - Open the folder: `source/plugins/Unigine/ImGuiSamples`.
    - Confirm `CMakeLists.txt` is highlighted in **bold** (ready to build).
@@ -90,7 +88,7 @@ You can set it, for example, as follows: click *Start*, type *Environment Variab
    > - set(UNIGINE_DOUBLE False CACHE BOOL "Double coords")
    > + set(UNIGINE_DOUBLE True CACHE BOOL "Double coords")
    >```
-   > Make sure this setting matches the `.project` file you selected (e.g., `*-double.project` for double precision builds).
+   > Make sure this setting matches the `.project` file you selected (e.g., `*_double.project` for double precision builds).
 
 7. **Build and start the Editor**:
    - Open Editor on your project's card in SDK Browser.
