@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<asset version="2.22.0.0">
+	<guid>f825dcad94de1d16a032c5a1d15c9502ca09169e</guid>
+	<type>world</type>
+	<hash>1ad446f261b2edb00e54b7eebbc688d9352b693a5cf620bff56c2f44b9fe418f</hash>
+	<runtimes>
+		<runtime id="f825dcad94de1d16a032c5a1d15c9502ca09169e" name="ImGuiSamples.world" link="0"/>
+	</runtimes>
+	<parameters>
+		<parameter type="string" name="navigation_settings_path"/>
+		<parameter type="string" name="physics_settings_path"/>
+		<parameter type="string" name="render_settings_path"/>
+		<parameter type="string" name="script_name"/>
+		<parameter type="string" name="sound_settings_path"/>
+		<parameter type="string" name="viewports_settings"/>
+	</parameters>
+</asset>
